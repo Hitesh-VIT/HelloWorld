@@ -58,7 +58,7 @@ def connection_list(request):
         lat1 = serializer.validated_data['latitude']
         lon1 = serializer.validated_data['longitude']
         R=6371
-        connection=Connection.objects.filter(connection_established="False").values('id','loaction_x','location_y','user_orign','data_limit','user_orign_id')
+        connection=Connection.objects.filter(conection_established="False").values('id','loaction_x','location_y','user_orign','data_limit','user_orign_id')
         for i in connection :
 
             lat2=i['location_x']
