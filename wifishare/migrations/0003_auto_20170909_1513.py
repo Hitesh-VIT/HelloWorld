@@ -17,11 +17,21 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='connection',
             name='user_connection',
-            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, related_name='destination', to=settings.AUTH_USER_MODEL),
+            field=models.ForeignKey(
+                blank=True,
+                null=True,
+                on_delete=django.db.models.deletion.CASCADE,
+                related_name='destination',
+                to=settings.AUTH_USER_MODEL),
         ),
         migrations.AlterField(
             model_name='connection',
             name='user_orign',
-            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, related_name='origin', to=settings.AUTH_USER_MODEL),
+            field=models.ForeignKey(
+                blank=True,
+                null=True,
+                on_delete=django.db.models.deletion.CASCADE,
+                related_name='origin',
+                to=settings.AUTH_USER_MODEL),
         ),
     ]

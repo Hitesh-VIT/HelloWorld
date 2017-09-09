@@ -19,15 +19,39 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='Connection',
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('SSID', models.CharField(max_length=144)),
-                ('password', models.CharField(max_length=250)),
-                ('data_limit', models.IntegerField()),
-                ('location_x', models.FloatField()),
-                ('loaction_y', models.FloatField()),
-                ('conection_established', models.BooleanField(default=False)),
-                ('user_connection', models.ForeignKey(blank=True, on_delete=django.db.models.deletion.CASCADE, related_name='destination', to=settings.AUTH_USER_MODEL)),
-                ('user_orign', models.ForeignKey(blank=True, on_delete=django.db.models.deletion.CASCADE, related_name='origin', to=settings.AUTH_USER_MODEL)),
+                ('id',
+                 models.AutoField(
+                     auto_created=True,
+                     primary_key=True,
+                     serialize=False,
+                     verbose_name='ID')),
+                ('SSID',
+                 models.CharField(
+                     max_length=144)),
+                ('password',
+                 models.CharField(
+                     max_length=250)),
+                ('data_limit',
+                 models.IntegerField()),
+                ('location_x',
+                 models.FloatField()),
+                ('loaction_y',
+                 models.FloatField()),
+                ('conection_established',
+                 models.BooleanField(
+                     default=False)),
+                ('user_connection',
+                 models.ForeignKey(
+                     blank=True,
+                     on_delete=django.db.models.deletion.CASCADE,
+                     related_name='destination',
+                     to=settings.AUTH_USER_MODEL)),
+                ('user_orign',
+                 models.ForeignKey(
+                     blank=True,
+                     on_delete=django.db.models.deletion.CASCADE,
+                     related_name='origin',
+                     to=settings.AUTH_USER_MODEL)),
             ],
         ),
     ]

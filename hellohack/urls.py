@@ -21,11 +21,11 @@ from wifishare.views import *
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^api-token-auth/', views.obtain_auth_token),
-    url(r'^register/',register),
-    url(r'^connection_request/',connection_create),
-    url(r'^connection_list/',connection_list),
-    url(r'^connection_connect/(?P<id>\d+)$',connection_establish),
+    url(r'^register/', register),
+    url(r'^connection_request/', connection_create),
+    url(r'^connection_list/', connection_list),
+    url(r'^connection_connect/(?P<id>\d+)$', connection_establish),
     url(r'^connection_delete/', delete_connection),
-    url(r'^connection_checker/',connection_checker),
+    url(r'^connection_checker/', connection_checker),
 
 ]
