@@ -98,15 +98,15 @@ def connection_checker(request):
 @api_view(['POST','GET'])
 @permission_classes((IsAuthenticated, ))
 
-def connection_establish(request):
+def connection_establish(request,id):
     user=request.user
     try:
-        obj=Connection.objects.get(id=request.POST['id'])
+        obj=Connection.objects.get(id=id)
         obj.user_connection = user
         obj.conection_established = "True"
     except:
         return Response ({"success":"False"})
-    return  Response({"success":"True"})
+    return  Response({"success":"True", "SSID":obj.SSID,"password":obj.password})
 
 
 
