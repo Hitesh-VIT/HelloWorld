@@ -26,6 +26,6 @@ urlpatterns = [
     url(r'^connection_list/',connection_list),
     url(r'^connection_connect/',connection_establish),
     url(r'^connection_delete/', delete_connection),
-    url('r^connection_checker/',connection_checker),
+    url(r'^connection_checker/',connection_checker),
 
 ]

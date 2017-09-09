@@ -70,6 +70,7 @@ def connection_list(request):
             c = 2 * math.atan2(math.sqrt(a), math.sqrt(1 - a))
             distance = R * c
             distance = distance * 1000
+            print distance
             if distance < 50 :
                 list_input = [i['user_orign'],i['data_limit'],distance,i['id']]
                 users_nearby.append(list_input)
@@ -85,11 +86,11 @@ def connection_checker(request):
     user= request.user
     obj=Connection.objects.filter(user_orign_id=user.id).first()
     if obj is None:
-        return Response({"success":"False"})
-    if obj.conection_established :
+        return Response({"success":"False"},status=404)
+    if obj.conection_established is True :
         return Response ({"success":"True"})
     else:
-        return Response({"success":"False"})
+        return Response({"success":"False"},status=404)
 
 
 # Connect to a network
