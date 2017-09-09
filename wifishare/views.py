@@ -5,9 +5,9 @@ from django.views.decorators.csrf import csrf_exempt
 
 from serializers import *
 from django.shortcuts import render
-from rest_framework.decorators import api_view
+from rest_framework.decorators import api_view, permission_classes,authentication_classes
 from rest_framework.response import Response
-from rest_framework.permissions import IsAuthenticated
+from rest_framework.permissions import IsAuthenticated,AllowAny
 from django.contrib.auth.hashers import make_password
 import math
 
@@ -15,7 +15,10 @@ import math
 
 #View To Register Users
 
+
 @api_view(['POST'])
+@permission_classes([])
+@authentication_classes([])
 def register(request):
     serializer=RegisterSerializer(data= request.data)
     if serializer.is_valid():
@@ -26,9 +29,12 @@ def register(request):
             return Response({"success":"false"})
     return Response({"success":serializer.errors})
 
-#View to create a connection request
 
+
+#View to create a connection request
 @api_view(['POST','GET'])
+@permission_classes((IsAuthenticated, ))
+
 def connection_create(request):
     user=request.user
     serializer =ConnectionSerializer(data=request.data)
@@ -43,6 +49,8 @@ def connection_create(request):
 
 #view to show nearby connections
 @api_view(['POST','GET'])
+@permission_classes((IsAuthenticated, ))
+
 def connection_list(request):
     users_nearby=[]
     serializer = FindConnectionSerializer(data = request.data)
@@ -71,6 +79,8 @@ def connection_list(request):
 
 # polling url
 @api_view(['POST','GET'])
+@permission_classes((IsAuthenticated, ))
+
 def connection_checker(request):
     user= request.user
     obj=Connection.objects.filter(user_orign_id=user.id).first()
@@ -84,6 +94,8 @@ def connection_checker(request):
 
 # Connect to a network
 @api_view(['POST','GET'])
+@permission_classes((IsAuthenticated, ))
+
 def connection_establish(request):
     user=request.user
     try:
