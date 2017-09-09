@@ -9,7 +9,7 @@ from rest_framework.decorators import api_view, permission_classes,authenticatio
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated,AllowAny
 from django.contrib.auth.hashers import make_password
-import math
+import math,json
 
 
 
@@ -58,11 +58,11 @@ def connection_list(request):
         lat1 = serializer.validated_data['latitude']
         lon1 = serializer.validated_data['longitude']
         R=6371
-        connection=Connection.objects.filter(conection_established="False").values('id','location_x','location_y','user_orign','data_limit','user_orign_id')
+        connection=Connection.objects.filter(conection_established="False")
         for i in connection :
 
-            lat2=i['location_x']
-            lon2=i['location_y']
+            lat2=i.location_x
+            lon2=i.location_y
             dlat = (lat2 - lat1) * math.pi / 180
             dlon = (lon2 - lon1) * math.pi / 180
             a = math.sin(dlat / 2) * math.sin(dlat / 2) + math.cos(lat1 * math.pi / 180) * math.cos(
@@ -70,11 +70,12 @@ def connection_list(request):
             c = 2 * math.atan2(math.sqrt(a), math.sqrt(1 - a))
             distance = R * c
             distance = distance * 1000
-            print distance
+
             if distance < 50 :
-                list_input = [i['user_orign'],i['data_limit'],distance,i['id']]
-                users_nearby.append(list_input)
-        return Response({"data":users_nearby})
+                d = {"user" :i.user_orign.username,"data_limit":i.data_limit,"distance":distance,"id":i.id}
+                users_nearby.append(d)
+
+        return Response(users_nearby)
 
     return Response({"success":"False"})
 
