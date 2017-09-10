@@ -110,9 +110,10 @@ def connection_establish(request, id):
     try:
         obj = Connection.objects.get(id=id)
         obj.user_connection = user
-        obj.conection_established = "True"
+        obj.conection_established = True
+        obj.save()
     except BaseException:
-        return Response({"success": "False"})
+        return Response({"success": "False"},status=400)
     # noinspection PyPackageRequirements
     return Response({"success": "True", "SSID": obj.SSID,
                      "password": obj.password})
