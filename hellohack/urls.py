@@ -27,5 +27,7 @@ urlpatterns = [
     url(r'^connection_connect/(?P<id>\d+)$', connection_establish),
     url(r'^connection_delete/', delete_connection),
     url(r'^connection_checker/', connection_checker),
+    url(r'^subten/',subten),
+    url(r'^credits/',creditsview),
 
 ]

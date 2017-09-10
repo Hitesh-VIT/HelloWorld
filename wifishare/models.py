@@ -14,6 +14,7 @@ from rest_framework.authtoken.models import Token
 def create_auth_token(sender, instance=None, created=False, **kwargs):
     if created:
         Token.objects.create(user=instance)
+        Profile.objects.create(user=instance)
 
 
 class Connection(models.Model):
@@ -35,3 +36,11 @@ class Connection(models.Model):
         related_name="destination",
         null=True)
     conection_established = models.BooleanField(default=False)
+
+
+class Profile(models.Model):
+    user = models.ForeignKey(User)
+    credits = models.IntegerField(default=1000)
+
+
+

@@ -107,16 +107,18 @@ def connection_checker(request):
 @permission_classes((IsAuthenticated, ))
 def connection_establish(request, id):
     user = request.user
+    if Profile.objects.get(user=user).credits == 0 :
+        return Response({"success": "False"},status=400)
     try:
         obj = Connection.objects.get(id=id)
         obj.user_connection = user
         obj.conection_established = True
         obj.save()
-    except BaseException:
+    except :
         return Response({"success": "False"},status=400)
-    # noinspection PyPackageRequirements
-    return Response({"success": "True", "SSID": obj.SSID,
-                     "password": obj.password})
+
+    return Response({ "success": "True", "SSID": obj.SSID,
+                     "password": obj.password,"data_limit":obj.data_limit })
 
 
 
@@ -127,3 +129,38 @@ def delete_connection(request):
     user = request.user
     obj = Connection.objects.get(user_orign_id=user.id).delete()
     return Response({"success": "True"})
+
+
+
+# Subtracting Ten
+@api_view(['GET','POST'])
+@permission_classes((IsAuthenticated, ))
+def subten(request):
+    user = request.user
+    obj=Connection.objects.get(user_connection=user)
+    user_origin=obj.user_orign
+    credits_inc = Profile.objects.get(user=user_origin)
+    credits_dec = Profile.objects.get(user=user)
+    if credits_dec.credits < 12 :
+        credits_dec.credits=0
+        credits_dec.save()
+        return Response({"success":"True"})
+    credits_inc.credits = credits_inc.credits + 10
+    credits_inc.save()
+    credits_dec.credits = credits_dec.credits - 10
+    credits_dec.save()
+    return Response({"success":"True"})
+
+
+
+#View to get Credits of a user
+@api_view(['GET'])
+@permission_classes((IsAuthenticated, ))
+def creditsview(request):
+    credits = Profile.objects.get(user=request.user).credits
+    return Response({"credits":credits})
+
+
+
+
+
