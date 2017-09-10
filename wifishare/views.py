@@ -39,6 +39,9 @@ def register(request):
 @permission_classes((IsAuthenticated, ))
 def connection_create(request):
     user = request.user
+    Obj=Connection.objects.filter(user_origin=user)
+    for i in Obj:
+        i.delete()
     serializer = ConnectionSerializer(data=request.data)
     if serializer.is_valid(raise_exception=True):
         obj = Connection.objects.create(**serializer.validated_data)
